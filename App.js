@@ -7,25 +7,25 @@ import { AddTodo } from './src/AddTodo'
 export default function App() {
   const [todos, setTodos] = useState([])
 
-  const AddTodo = (title) => {
-    // const newTodo = {
-    //   id: Date.now().toString(),
-    //   title: title
-    // }
+  // const AddTodo = (title) => {
+  //    const newTodo = {
+  //      id: Date.now().toString(),
+  //      title: title
+  //    }
 
-    setTodos(prev => [...prev, {
-      id: Date.now().toString(),
-      title
-    }])
-  }
+  //   setTodos(prev => [...prev, {
+  //     id: Date.now().toString(),
+  //     title
+  //   }])
+  // }
 
   return (
     <View>
       <Navbar title="Todo App"/>
       <View style={styles.container}>
-        {/* <AddTodo onSubmit={AddTodo} />
+        <AddTodo />
 
-          <View>
+          {/* <View>
             {todos.map(todo => {
               return (<Text>{todo.title}</Text>)
             })}
