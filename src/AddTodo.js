@@ -5,14 +5,20 @@ export const AddTodo = ({ onSubmit}) => {
     const[value, setValue] = useState('') 
 
     const pressHandler = () => {
-        onSubmit('Test todo')
+        if (value.trim()) {
+            onSubmit(value)
+            setValue('')
+        } else {
+            // error
+        }
     }
 
     return (
         <View style={styles.block}>
             <TextInput 
                 style={styles.input}
-                onChangeText={text => setValue(text)}
+                //onChangeText={text => setValue(text)}
+                onChangeText={setValue}
                 value={value}
                 placeholder="Enter a Todo..."
             />
