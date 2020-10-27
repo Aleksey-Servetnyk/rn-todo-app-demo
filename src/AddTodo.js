@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { View, StyleSheet, TextInput, Button} from 'react-native'
+import { View, StyleSheet, TextInput, Button, Alert} from 'react-native'
 
 export const AddTodo = ({ onSubmit}) => {
     const[value, setValue] = useState('') 
@@ -9,7 +9,7 @@ export const AddTodo = ({ onSubmit}) => {
             onSubmit(value)
             setValue('')
         } else {
-            // error
+            Alert.alert('Enter Todo Name, please')
         }
     }
 
