@@ -7,12 +7,16 @@ export const TodoScreen = ({ goBack, todo }) => {
             <Text>{todo.title}</Text>
             <View style={styles.buttons}>
                 <View style={styles.button}>
-                    <Button title='Back' onPress={goBack} />
+                    <Button 
+                        title='Back'
+                        color='#757575' 
+                        onPress={goBack} 
+                    />
                 </View>
                 <View style={styles.button}>
                     <Button 
                         title='Remove'
-                        color='#ff0000'
+                        color='#e53935'
                         onPress={() => console.log('To Remove')} 
                     />
                 </View>
