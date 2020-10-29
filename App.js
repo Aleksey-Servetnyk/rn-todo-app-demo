@@ -32,7 +32,7 @@ export default function App() {
   )
 
   if (todoId) {
-    content = <TodoScreen />
+    content = <TodoScreen goBack={() => setTodoId(null)} />
   }
 
   return (
