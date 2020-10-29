@@ -26,13 +26,20 @@ export default function App() {
   }
 
   let content = (
-    <MainScreen todos={todos} addTodo={addTodo} removeTodo={removeTodo} openTodo={(id) => {
-      setTodoId(id)
-    }} />
+    <MainScreen 
+      todos={todos} 
+      addTodo={addTodo} 
+      removeTodo={removeTodo} 
+      // openTodo={(id) => {
+      //   setTodoId(id)
+      // }} 
+      openTodo={setTodoId}
+    />
   )
 
   if (todoId) {
-    content = <TodoScreen goBack={() => setTodoId(null)} />
+    const selectedTodo = todos.find(todo => todo.id === todoId)
+    content = <TodoScreen goBack={() => setTodoId(null)} todo={selectedTodo} />
   }
 
   return (
