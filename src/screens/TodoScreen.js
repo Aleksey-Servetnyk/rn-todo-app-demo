@@ -6,12 +6,16 @@ export const TodoScreen = ({ goBack, todo }) => {
         <View>
             <Text>{todo.title}</Text>
             <View style={styles.buttons}>
-                <Button title='Back' onPress={goBack} />
-                <Button 
-                    title='Remove'
-                    color='#ff0000'
-                    onPress={() => console.log('To Remove')} 
-                />
+                <View style={styles.button}>
+                    <Button title='Back' onPress={goBack} />
+                </View>
+                <View style={styles.button}>
+                    <Button 
+                        title='Remove'
+                        color='#ff0000'
+                        onPress={() => console.log('To Remove')} 
+                    />
+                </View>
             </View>
         </View>
     )
@@ -19,6 +23,10 @@ export const TodoScreen = ({ goBack, todo }) => {
 
 const styles = StyleSheet.create({
     buttons: {
-        flexDirection: 'row'
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    button: {
+        width: '40%'
     }
 })
