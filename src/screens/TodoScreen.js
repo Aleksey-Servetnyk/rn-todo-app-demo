@@ -8,12 +8,11 @@ export const TodoScreen = ({ goBack, todo }) => {
     return (
         <View>
 
-            <AppCard>
-                <Text>{todo.title}</Text>
+            <AppCard style={styles.card}>
+                <Text style={styles.title}>{todo.title}</Text>
                 <Button title='Edit'/>
             </AppCard>
 
-            <Text>{todo.title}</Text>
             <View style={styles.buttons}>
                 <View style={styles.button}>
                     <Button 
@@ -39,7 +38,14 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between'
     },
+    card: {
+        marginBottom: 20,
+        padding: 15
+    },
     button: {
         width: '40%'
+    },
+    title: {
+        fontSize: 20
     }
 })
