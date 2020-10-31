@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
 import { StyleSheet, View, Alert } from 'react-native';
 import * as Font from 'expo-font'
+import { AppLoading } from 'expo'
 import { Navbar } from './src/components/Navbar'
 import { MainScreen } from './src/screens/MainScreen';
 import { TodoScreen } from './src/screens/TodoScreen';
@@ -14,8 +15,17 @@ async function loadApplication () {
 }
 
 export default function App() {
+  const [isRedy, setIsRedy] = useState(false)     // app redy flug state
   const [todoId, setTodoId] = useState(null)      // screen navigation state
   const [todos, setTodos] = useState([])          // todos content state
+
+  if (!isRedy) {                                  // waiting load the application
+    return <AppLoading 
+      startAsync={loadApplication} 
+      onError={err => console.log(err)}
+      onFinish={() => setIsRedy(true)}
+    />
+  }
 
   const addTodo = (title) => {
     // const newTodo = {
