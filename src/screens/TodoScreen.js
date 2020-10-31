@@ -12,7 +12,7 @@ export const TodoScreen = ({ goBack, todo, onRemove }) => {
     return (
         <View>
 
-            <EditModal />
+            <EditModal visible={modal} onCancel={() => setModal(false)} />
 
             <AppCard style={styles.card}>
                 <Text style={styles.title}>{todo.title}</Text>
