@@ -1,8 +1,18 @@
-import React from 'react'
-import { View, StyleSheet, TextInput, Button, Modal } from 'react-native'
+import React, {useState} from 'react'
+import { View, StyleSheet, TextInput, Button, Modal, Alert } from 'react-native'
 import { THEME } from '../theme'
 
-export const EditModal = ({ visible, onCancel }) => {
+export const EditModal = ({ visible, onCancel, value, onSave }) => {
+    const [title, setTitle] = useState(value)       // local state for Todo Name
+
+    const saveHandler = () => {                     // saving changed Todo Name with validation
+        if (title.trim().length < 3) {
+            Alert.alert('Error!', `Todo Name minimal lenght is 3 sumbols. Now it: ${title.trim().length} sumbols.`)
+        } else {
+            onSave(title)
+        }
+    }
+
     return (
         <Modal 
             visible={visible} 
@@ -11,6 +21,8 @@ export const EditModal = ({ visible, onCancel }) => {
         >
             <View style={styles.wrap}>
                 <TextInput 
+                    value={title}
+                    onChangeText={setTitle}
                     style={styles.input}
                     placeholder='Enter Todo Name, pls'
                     autoCapitalize='none'
@@ -19,7 +31,7 @@ export const EditModal = ({ visible, onCancel }) => {
                 />
                 <View style={styles.buttons} >
                     <Button title='Cancel' onPress={onCancel} color={THEME.DANGER_COLOR} />
-                    <Button title='Save' />
+                    <Button title='Save' onPress={saveHandler} />
                 </View>
             </View>
         </Modal>
