@@ -14,11 +14,13 @@ async function loadApplication () {
 export default function App() {
   const [isRedy, setIsRedy] = useState(false)     // app redy flug state
   if (!isRedy) {                                  // waiting load the application
-    return <AppLoading 
-      startAsync={loadApplication} 
-      onError={err => console.log(err)}
-      onFinish={() => setIsRedy(true)}
-    />
+    return (
+      <AppLoading 
+        startAsync={loadApplication} 
+        onError={err => console.log(err)}
+        onFinish={() => setIsRedy(true)}
+      />
+    )
   }
 
   return (

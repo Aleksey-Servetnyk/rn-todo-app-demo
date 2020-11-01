@@ -4,7 +4,7 @@ import { todoReducer } from './todoReducer'
 
 export const TodoState = ({ children }) => {
     const initialState = {
-        todos: []
+        todos: [{ id: '1', title: 'Learn React Native' }]
     }
     const [state, dispatch] = useReducer(todoReducer, initialState)
 

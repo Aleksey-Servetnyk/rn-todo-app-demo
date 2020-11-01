@@ -5,6 +5,7 @@ import { Navbar } from './components/Navbar'
 import { THEME } from './theme';
 import { MainScreen } from './screens/MainScreen'
 import { TodoContext } from './context/todo/todoContext'
+import { TodoScreen } from './screens/TodoScreen'
 
 export const MainLayout = () => {
     const todoContext = useContext(TodoContext)
@@ -24,9 +25,7 @@ export const MainLayout = () => {
       }
     
       const removeTodo = (id) => {
-    
         const todo = todos.find(t => t.id === id)
-    
         Alert.alert(
           "Deleting the element",
           `Are you sure you want to delete the "${todo.title}" ?`,
@@ -69,15 +68,15 @@ export const MainLayout = () => {
     
       if (todoId) {
         const selectedTodo = todos.find(todo => todo.id === todoId)
-        content = 
+        content = (
           <TodoScreen 
             onRemove={removeTodo} 
             goBack={() => setTodoId(null)} 
             todo={selectedTodo} 
             onSave={updateTodo}  
           />
+        )
       }
-    
 
   return (
     <View>
