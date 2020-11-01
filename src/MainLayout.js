@@ -1,10 +1,13 @@
 import { StatusBar } from 'expo-status-bar';
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Navbar } from './components/Navbar'
 import { THEME } from './theme';
+import { MainScreen } from './screens/MainScreen'
+import { TodoContext } from './context/todo/todoContext'
 
 export const MainLayout = () => {
+    const todoContext = useContext(TodoContext)
     const [todoId, setTodoId] = useState(null)      // screen navigation state
     const [todos, setTodos] = useState([])          // todos content state
 
@@ -52,7 +55,29 @@ export const MainLayout = () => {
         }))
       }
     
-
+      let content = (
+        <MainScreen 
+          todos={todoContext.todos} 
+          addTodo={addTodo} 
+          removeTodo={removeTodo} 
+          // openTodo={(id) => {
+          //   setTodoId(id)
+          // }} 
+          openTodo={setTodoId}
+        />
+      )
+    
+      if (todoId) {
+        const selectedTodo = todos.find(todo => todo.id === todoId)
+        content = 
+          <TodoScreen 
+            onRemove={removeTodo} 
+            goBack={() => setTodoId(null)} 
+            todo={selectedTodo} 
+            onSave={updateTodo}  
+          />
+      }
+    
 
   return (
     <View>
