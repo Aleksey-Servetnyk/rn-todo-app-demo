@@ -1,12 +1,9 @@
-import { StatusBar } from 'expo-status-bar';
 import React, {useState} from 'react';
-import { StyleSheet, View, Alert } from 'react-native';
+import { Alert } from 'react-native';
 import * as Font from 'expo-font'
 import { AppLoading } from 'expo'
-import { Navbar } from './src/components/Navbar'
 import { MainScreen } from './src/screens/MainScreen';
 import { TodoScreen } from './src/screens/TodoScreen';
-import { THEME } from './src/theme';
 
 async function loadApplication () {
   await Font.loadAsync({
@@ -17,9 +14,6 @@ async function loadApplication () {
 
 export default function App() {
   const [isRedy, setIsRedy] = useState(false)     // app redy flug state
-  const [todoId, setTodoId] = useState(null)      // screen navigation state
-  const [todos, setTodos] = useState([])          // todos content state
-
   if (!isRedy) {                                  // waiting load the application
     return <AppLoading 
       startAsync={loadApplication} 
@@ -28,49 +22,6 @@ export default function App() {
     />
   }
 
-  const addTodo = (title) => {
-    // const newTodo = {
-    //   id: Date.now().toString(),
-    //   title: title
-    // }
-
-    setTodos(prev => [...prev, {
-      id: Date.now().toString(),
-      title
-    }])
-  }
-
-  const removeTodo = (id) => {
-
-    const todo = todos.find(t => t.id === id)
-
-    Alert.alert(
-      "Deleting the element",
-      `Are you sure you want to delete the "${todo.title}" ?`,
-      [
-        {
-          text: "Cancel",
-          style: "cancel"
-        },
-        { text: "Delete",
-          onPress: () => {
-            setTodoId(null)                                       // Back to main screen
-            setTodos(prev => prev.filter(todo => todo.id != id))
-          } 
-        }
-      ],
-      { cancelable: false }
-    );
-  }
-
-  const updateTodo = (id, title) => {             // update title by id
-    setTodos(old => old.map(todo => {
-      if (todo.id === id) {
-        todo.title = title
-      }
-      return todo
-    }))
-  }
 
   let content = (
     <MainScreen 
@@ -96,27 +47,7 @@ export default function App() {
   }
 
   return (
-    <View>
-      <Navbar title="Todo App"/>
-      <View style={styles.container}>
-
-          {/* <ScrollView>
-            {todos.map(todo => (
-              <Todo todo={todo} key={todo.id} /> 
-            ))}
-          </ScrollView> */}
-
-          { content }
-
-      </View>
-      <StatusBar style="auto" />
-    </View>
+    <TodoState><MainLayout /></TodoState>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: THEME.PADDING_HORIZONTAL,
-    paddingVertical: 20
-  }
-});
