@@ -60,18 +60,25 @@ export const TodoState = ({ children }) => {
 
   const fetchTodos = async () => {
     showLoader();
-    const responce = await fetch(
-      "https://rn-todo-app-30322.firebaseio.com/todos.json",
-      {
-        method: "GET",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const data = await responce.json();
-    //console.log("Fetch Data", data);
-    const todos = Object.keys(data).map((key) => ({ ...data[key], id: key }));
-    dispatch({ type: FETCH_TODOS, todos });
-    hideLoader();
+    clearError();
+    try {
+      const responce = await fetch(
+        "https://rn-todo-app-30322.firebaseio.com/todos.json",
+        {
+          method: "GET",
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const data = await responce.json();
+      //console.log("Fetch Data", data);
+      const todos = Object.keys(data).map((key) => ({ ...data[key], id: key }));
+      dispatch({ type: FETCH_TODOS, todos });
+    } catch (e) {
+      showError("Something is wrong. Try again.");
+      console.log(e);
+    } finally {
+      hideLoader();
+    }
   };
 
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
