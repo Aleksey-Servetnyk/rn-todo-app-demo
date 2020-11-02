@@ -1,5 +1,6 @@
 import React, { useContext, useReducer } from "react";
-import { ADD_TODO, CHANGE_SCREEN, REMOVE_TODO, UPDATE_TODO } from "../types";
+import { Alert } from "react-native";
+import { ADD_TODO, REMOVE_TODO, UPDATE_TODO } from "../types";
 import { TodoContext } from "./todoContext";
 import { todoReducer } from "./todoReducer";
 import { ScreenContext } from "../screen/screenContext";
@@ -13,8 +14,25 @@ export const TodoState = ({ children }) => {
 
   const addTodo = (title) => dispatch({ type: ADD_TODO, title });
   const removeTodo = (id) => {
-    changeScreen(null);
-    dispatch({ type: REMOVE_TODO, id });
+    const todo = state.todos.find((t) => t.id === id);
+    Alert.alert(
+      "Deleting the element",
+      `Are you sure you want to delete the "${todo.title}" ?`,
+      [
+        {
+          text: "Cancel",
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            changeScreen(null);
+            dispatch({ type: REMOVE_TODO, id });
+          },
+        },
+      ],
+      { cancelable: false }
+    );
   };
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
 
