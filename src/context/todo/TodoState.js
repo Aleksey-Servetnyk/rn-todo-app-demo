@@ -3,6 +3,7 @@ import { Alert } from "react-native";
 import {
   ADD_TODO,
   CLEAR_ERROR,
+  FETCH_TODOS,
   HIDE_LOADER,
   REMOVE_TODO,
   SHOW_ERROR,
@@ -56,6 +57,21 @@ export const TodoState = ({ children }) => {
       { cancelable: false }
     );
   };
+
+  const fetchTodos = async () => {
+    const responce = await fetch(
+      "https://rn-todo-app-30322.firebaseio.com/todos.json",
+      {
+        method: "GET",
+        headers: { "Content-Type": "application/json" },
+      }
+    );
+    const data = await responce.json();
+    console.log("Fetch Data", data);
+    const todos = Object.keys(data).map((key) => ({ ...data[key], id: key }));
+    setTimeout(() => dispatch({ type: FETCH_TODOS, todos }),3000);
+  };
+
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
   const showLoader = () => dispatch({ type: SHOW_LOADER });
   const hideLoader = () => dispatch({ type: HIDE_LOADER });
@@ -64,7 +80,15 @@ export const TodoState = ({ children }) => {
 
   return (
     <TodoContext.Provider
-      value={{ todos: state.todos, addTodo, removeTodo, updateTodo }}
+      value={{
+        todos: state.todos,
+        loading: state.loading,
+        error: state.error,
+        addTodo,
+        removeTodo,
+        updateTodo,
+        fetchTodos,
+      }}
     >
       {children}
     </TodoContext.Provider>
