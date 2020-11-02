@@ -59,6 +59,7 @@ export const TodoState = ({ children }) => {
   };
 
   const fetchTodos = async () => {
+    showLoader();
     const responce = await fetch(
       "https://rn-todo-app-30322.firebaseio.com/todos.json",
       {
@@ -67,9 +68,10 @@ export const TodoState = ({ children }) => {
       }
     );
     const data = await responce.json();
-    console.log("Fetch Data", data);
+    //console.log("Fetch Data", data);
     const todos = Object.keys(data).map((key) => ({ ...data[key], id: key }));
-    setTimeout(() => dispatch({ type: FETCH_TODOS, todos }),3000);
+    dispatch({ type: FETCH_TODOS, todos });
+    hideLoader();
   };
 
   const updateTodo = (id, title) => dispatch({ type: UPDATE_TODO, id, title });
